@@ -1,0 +1,35 @@
+Host prod-server
+    HostName 100.74.48.94
+    Port 2222
+    User root
+    IdentityFile ~/.ssh/prod_hetzner_w7sh_ed25519
+    StrictHostKeyChecking accept-new
+
+Host w7sh-r710
+    HostName 100.94.161.30
+    Port 22
+    User john
+    IdentityFile ~/.ssh/id_ed25519
+    StrictHostKeyChecking accept-new
+
+Host macbook
+    HostName monster--macbook-pro
+    Port 22
+    User john
+    IdentityFile ~/.ssh/id_ed25519
+    StrictHostKeyChecking accept-new
+    PasswordAuthentication no
+
+Host w7sh-win-local
+    HostName 100.121.152.43
+    Port 22
+    User john
+    IdentityFile ~/.ssh/w7sh_win_local_ed25519
+    StrictHostKeyChecking accept-new
+
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519
+    StrictHostKeyChecking accept-new
+    IdentitiesOnly yes

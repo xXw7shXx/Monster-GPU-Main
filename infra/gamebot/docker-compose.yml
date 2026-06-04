@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: gamebot_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER:-gamebot}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+      POSTGRES_DB: ${DB_NAME:-gamebot_db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-gamebot} -d ${DB_NAME:-gamebot_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  bot:
+    build: .
+    container_name: telegram_gamebot
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./logs:/app/logs
+      - ./templates:/app/templates
+      - ./logo.png:/app/logo.png
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://${DB_USER:-gamebot}:${DB_PASSWORD:-password}@db:5432/${DB_NAME:-gamebot_db}
+      INTERNAL_API_KEY: ${INTERNAL_API_KEY:-enterprise_secret}
+    ports:
+      - "8000:8000"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  admin_backend:
+    build: ./super_admin/backend
+    container_name: super_admin_backend
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      GAMEBOT_API_URL: http://bot:8000
+      GAMEBOT_API_KEY: ${INTERNAL_API_KEY:-enterprise_secret}
+    depends_on:
+      - bot
+
+  admin_frontend:
+    build: ./super_admin/frontend
+    container_name: super_admin_frontend
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    depends_on:
+      - admin_backend
+
+  mobile_scraper:
+    build: .
+    container_name: mobile_scraper_service
+    restart: unless-stopped
+    command: ["python", "minireview_service.py"]
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://${DB_USER:-gamebot}:${DB_PASSWORD:-password}@db:5432/${DB_NAME:-gamebot_db}
+    volumes:
+      - ./logs:/app/logs
+
+volumes:
+  postgres_data:

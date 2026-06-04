@@ -1,0 +1,7 @@
+{
+  "inputs": {
+    "spec": "Plan a new Movies & TV Shows bot extension for the existing GameBot project. Requirements: 1. Architecture must support multiple bots managed by a single Admin Panel. 2. The new bot should provide information about upcoming releases and search capabilities. 3. Use a similar structure to GameBot (FastAPI + Telegram/TikTok). 4. Integrate with relevant movie/TV APIs (e.g., TMDB). 5. Support Arabic and English. 6. Admin panel must handle multi-bot metrics and broadcasting.",
+    "integration": "gemini",
+    "scope": "full"
+  }
+}

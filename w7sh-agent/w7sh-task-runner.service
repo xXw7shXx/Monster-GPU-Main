@@ -1,0 +1,16 @@
+[Unit]
+Description=W7SH Task Runner v2
+After=network.target
+
+[Service]
+Type=simple
+User=john
+WorkingDirectory=/home/john/w7sh-agent
+Environment=NODE_NAME=monster-gpu
+EnvironmentFile=/home/john/w7sh-agent/.env
+ExecStart=/usr/bin/python3 /home/john/w7sh-agent/scripts/w7sh_task_runner_v2.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

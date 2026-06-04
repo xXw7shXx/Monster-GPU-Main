@@ -1,0 +1,14 @@
+{
+    "new_feature": {
+        "en": "🚀 <b>New Feature Alert!</b>\n\nWe've just added <i>{feature_name}</i> to the bot. Try it out now!\n\nUse /help to see all commands.",
+        "ar": "🚀 <b>تنبيه ميزة جديدة!</b>\n\nلقد أضفنا للتو <i>{feature_name}</i> إلى البوت. جربها الآن!\n\nاستخدم /help لرؤية جميع الأوامر."
+    },
+    "maintenance": {
+        "en": "⚠️ <b>Scheduled Maintenance</b>\n\nThe bot will be down for maintenance on <b>{date}</b> at <b>{time}</b>. We apologize for the inconvenience.",
+        "ar": "⚠️ <b>صيانة مجدولة</b>\n\nسيتوقف البوت لإجراء الصيانة في تاريخ <b>{date}</b> الساعة <b>{time}</b>. نعتذر عن الإزعاج."
+    },
+    "advertisement": {
+        "en": "📢 <b>Sponsored Message</b>\n\nCheck out this amazing gaming deal: <i>{deal_name}</i>!\n\n🔗 <a href='{url}'>Click here to see more</a>",
+        "ar": "📢 <b>رسالة إعلانية</b>\n\nتحقق من هذا العرض المذهل للألعاب: <i>{deal_name}</i>!\n\n🔗 <a href='{url}'>اضغط هنا للمزيد</a>"
+    }
+}

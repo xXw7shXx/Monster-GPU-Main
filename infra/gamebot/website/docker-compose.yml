@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  website:
+    image: nginx:alpine
+    container_name: gamer_alert_website
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # Absolute Windows Paths for Origin SSL
+      - C:\Users\Administrator\Desktop\GamerAlertWebsite\nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - C:\Users\Administrator\Desktop\GamerAlertWebsite\server.crt:/etc/nginx/ssl/server.crt:ro
+      - C:\Users\Administrator\Desktop\GamerAlertWebsite\server.key:/etc/nginx/ssl/server.key:ro
+      - C:\Users\Administrator\Desktop\GamerAlertWebsite:/usr/share/nginx/html:ro

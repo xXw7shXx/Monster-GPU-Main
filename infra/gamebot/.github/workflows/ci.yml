@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Secret scan
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          forbidden_paths = ('.env', '.db', '.sqlite', '.pem', '.key', '.bak')
+          token_patterns = [
+              re.compile(r'-----BEGIN [A-Z ]*PRIVATE KEY-----'),
+              re.compile(r'gh[pousr]_[A-Za-z0-9_]{20,}'),
+              re.compile(r'\\b\\d{6,}:AA[A-Za-z0-9_-]{20,}\\b'),
+              re.compile(r'postgres(?:ql)?://[^\\s:@/]+:[^\\s@/]+@'),
+          ]
+          credential_url = re.compile(r'postgres(?:ql)?(?:\+\w+)?://[^\s:@/]+:([^\s@/]+)@')
+          assignment = re.compile(r'(?i)\b(api[_-]?key|token|secret|password)\s*=\s*[\'\"]([^\'\"\n]{8,})[\'\"]')
+          safe_assignment_values = {'validation', 'your_api_key', 'placeholder', 'example_secret', 'change_me', 'change-me'}
+          failures = []
+          for path in Path('.').rglob('*'):
+              if '.git' in path.parts or not path.is_file():
+                  continue
+              rel = path.as_posix()
+              if any(rel.endswith(suffix) or f'/{suffix}' in rel for suffix in forbidden_paths):
+                  failures.append(f'forbidden tracked path: {rel}')
+                  continue
+              try:
+                  text = path.read_text(errors='ignore')
+              except Exception:
+                  continue
+              for pattern in token_patterns:
+                  if pattern.search(text):
+                      failures.append(f'secret-like pattern: {rel}')
+                      break
+              for match in credential_url.finditer(text):
+                  password = match.group(1)
+                  if not password.startswith('$'):
+                      failures.append(f'secret-like pattern: {rel}')
+                      break
+              for match in assignment.finditer(text):
+                  value = match.group(2)
+                  if value.startswith('$') or value.lower() in safe_assignment_values:
+                      continue
+                  failures.append(f'secret-like pattern: {rel}')
+                  break
+          if failures:
+              print('\\n'.join(failures))
+              raise SystemExit(1)
+          print('secret scan passed')
+          PY
+
+      - name: Python compile check
+        run: python -m compileall -q adapters alembic core database engine handlers jobs scripts services utils bot.py

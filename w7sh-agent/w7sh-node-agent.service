@@ -1,0 +1,20 @@
+[Unit]
+Description=W7SH Node Agent for monster-gpu
+After=network-online.target docker.service tailscaled.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=%I
+WorkingDirectory=/home/%I/w7sh-agent
+Environment=PYTHONPATH=/home/%I/w7sh-agent
+EnvironmentFile=-/home/%I/w7sh-agent/.env
+ExecStart=/home/%I/w7sh-agent/venv/bin/python /home/%I/w7sh-agent/server_agent/node_agent.py
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+RestartSec=10
+StandardOutput=append:/home/%I/w7sh-agent/ai-agent-memory/logs/node-agent.log
+StandardError=append:/home/%I/w7sh-agent/ai-agent-memory/logs/node-agent-error.log
+
+[Install]
+WantedBy=multi-user.target

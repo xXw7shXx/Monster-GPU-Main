@@ -1,0 +1,8 @@
+[Unit]
+Description=W7SH Node Health Check
+After=network.target
+
+[Service]
+Type=oneshot
+User=john
+ExecStart=/home/john/w7sh-agent/scripts/node_health_check.sh

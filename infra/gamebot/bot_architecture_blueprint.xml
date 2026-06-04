@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SystemArchitecture bot_name="Gamer Alert" version="2.1-Enhanced" engine="Async-Database-First">
+    <Overview>
+        <Description>Professional gaming intelligence engine upgraded with fuzzy matching, media optimization, and BI metrics.</Description>
+        <Philosophy>Decoupled Architecture with Intelligent Normalization. Security-focused scrapers with rate-limit jitter.</Philosophy>
+    </Overview>
+
+    <LogicFlow>
+        <Cycle interval="10 Minutes">
+            <Security>Rate-Limit Jitter (±2–5s) applied to all external calls to mimic human behavior.</Security>
+            <Normalization mechanism="RapidFuzz">
+                <Action>Title variant merging (e.g., 'VI' -> '6').</Action>
+                <Action>Cross-source entity deduplication based on token_sort_ratio.</Action>
+            </Normalization>
+            <PriorityLevel rank="1" name="Critical">
+                <Action>Fetch 'Free-to-Keep' deals from Epic Games Store and ITAD.</Action>
+                <Trigger>Immediate Flash Alert if Price=0.00 and OriginalPrice>0.</Trigger>
+            </PriorityLevel>
+            <PriorityLevel rank="2" name="High">
+                <Action>Concurrent fetch from IGDB, RAWG, Steam, and MiniReview.</Action>
+                <Resilience source="MiniReview">Soft-Fail Headless Browser Proxy (Playwright) if standard HTTP is blocked.</Resilience>
+            </PriorityLevel>
+            <PriorityLevel rank="3" name="Lazy">
+                <Action>OpenCritic score fetching with Agentic Content Drafting for Mighty (80+) titles.</Action>
+            </PriorityLevel>
+        </Cycle>
+        <MediaOptimization>
+            <Worker action="Resize/Compress">Pillow-driven generation of 320px thumbnails for Telegram previews.</Worker>
+            <Storage>thumbnail_url column in game_cache_v2.</Storage>
+        </MediaOptimization>
+    </LogicFlow>
+
+    <DataSchema table="game_cache_v2">
+        <Column name="thumbnail_url" type="String">Compressed preview image path.</Column>
+        <Column name="hype_score" type="Integer">BI Metric: Cross-referenced IGDB Hype and OpenCritic scores.</Column>
+        <Column name="cost_per_deal" type="Float">BI Metric: Tracks API credit usage per successful discovery.</Column>
+        <Column name="click_count" type="Integer">Engagement Heatmap skeleton for click-through tracking.</Column>
+        <Indexes>
+            <Index name="idx_title">Optimized for Fuzzy matching lookups.</Index>
+            <Index name="idx_ltf">Flash deal prioritization.</Index>
+        </Indexes>
+    </DataSchema>
+
+    <BusinessIntelligence engine="bi_engine.py">
+        <Metric name="Hype-Cycle Predictor">Weighted average of audience hype and critic reception.</Metric>
+        <Metric name="Cost-per-Deal">Real-time tracking of USD investment per freebie acquisition.</Metric>
+        <Metric name="Engagement Heatmap">Skeleton logic for platform-specific click tracking.</Metric>
+    </BusinessIntelligence>
+
+    <AgenticCapability module="content_drafter.py">
+        <Provider>Google Gemini LLM</Provider>
+        <Trigger>Games with OpenCritic score >= 80.</Trigger>
+        <Action>Auto-generate viral TikTok scripts and Telegram captions.</Action>
+    </AgenticCapability>
+
+    <Documentation status="Regenerated" timestamp="2026-05-02T13:45:00Z" />
+</SystemArchitecture>

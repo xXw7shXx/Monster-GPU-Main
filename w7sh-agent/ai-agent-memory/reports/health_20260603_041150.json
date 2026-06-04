@@ -1,0 +1,24 @@
+{
+  "timestamp": "2026-06-03 04:11:50",
+  "node": "monster-gpu",
+  "cpu_usage_percent": 0.4,
+  "memory": {
+    "total_mb": 31184,
+    "used_mb": 2277,
+    "free_mb": 21181,
+    "usage_percent": 7.30
+  },
+  "gpu": {
+    "utilization_percent": 0,
+    "temperature_c": 48,
+    "memory_used_mb": 6022,
+    "memory_total_mb": 24576
+  },
+  "disk": {
+    "usage_percent": 4,
+    "available": "859G"
+  },
+  "docker_running_containers": 0,
+  "tailscale_online": true,
+  "ollama_models_count": 1
+}

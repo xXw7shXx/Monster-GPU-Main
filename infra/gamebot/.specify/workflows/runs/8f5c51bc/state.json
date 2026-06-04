@@ -1,0 +1,53 @@
+{
+  "run_id": "8f5c51bc",
+  "workflow_id": "speckit",
+  "status": "running",
+  "current_step_index": 2,
+  "current_step_id": "plan",
+  "step_results": {
+    "specify": {
+      "integration": "gemini",
+      "model": null,
+      "options": {},
+      "input": {
+        "args": "Plan a new Movies & TV Shows bot extension for the existing GameBot project. Requirements: 1. Architecture must support multiple bots managed by a single Admin Panel. 2. The new bot should provide information about upcoming releases and search capabilities. 3. Use a similar structure to GameBot (FastAPI + Telegram/TikTok). 4. Integrate with relevant movie/TV APIs (e.g., TMDB). 5. Support Arabic and English. 6. Admin panel must handle multi-bot metrics and broadcasting."
+      },
+      "output": {
+        "command": "speckit.specify",
+        "integration": "gemini",
+        "model": null,
+        "options": {},
+        "input": {
+          "args": "Plan a new Movies & TV Shows bot extension for the existing GameBot project. Requirements: 1. Architecture must support multiple bots managed by a single Admin Panel. 2. The new bot should provide information about upcoming releases and search capabilities. 3. Use a similar structure to GameBot (FastAPI + Telegram/TikTok). 4. Integrate with relevant movie/TV APIs (e.g., TMDB). 5. Support Arabic and English. 6. Admin panel must handle multi-bot metrics and broadcasting."
+        },
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "",
+        "dispatched": true
+      },
+      "status": "completed"
+    },
+    "review-spec": {
+      "integration": null,
+      "model": null,
+      "options": [
+        "approve",
+        "reject"
+      ],
+      "input": {},
+      "output": {
+        "message": "Review the generated spec before planning.",
+        "options": [
+          "approve",
+          "reject"
+        ],
+        "on_reject": "abort",
+        "show_file": null,
+        "choice": "approve"
+      },
+      "status": "completed"
+    }
+  },
+  "created_at": "2026-05-03T18:37:11.732207+00:00",
+  "updated_at": "2026-05-03T18:40:33.037597+00:00"
+}
