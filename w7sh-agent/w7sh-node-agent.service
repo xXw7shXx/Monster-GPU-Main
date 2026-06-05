@@ -9,7 +9,7 @@ User=%I
 WorkingDirectory=/home/%I/w7sh-agent
 Environment=PYTHONPATH=/home/%I/w7sh-agent
 EnvironmentFile=-/home/%I/w7sh-agent/.env
-ExecStart=/home/%I/w7sh-agent/venv/bin/python /home/%I/w7sh-agent/server_agent/node_agent.py
+ExecStart=/home/%I/w7sh-agent/venv/bin/python /home/%I/w7sh-agent/server_agent/w7sh_server_agent_v2.py
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=on-failure
 RestartSec=10
